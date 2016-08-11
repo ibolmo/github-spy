@@ -38,12 +38,10 @@ if (!process.env.OPENSHIFT_NODEJS_IP) {
 }
 
 var db = {};
-if (fs.existsSync('./db.json')){
-  try {
-    db = JSON.parse(fs.readFileSync('./db.json'));
-  } catch(e){
-    debug(e);
-  }
+try {
+  db = JSON.parse(fs.readFileSync((process.env.OPENSHIFT_DATA_DIR || '.') + '/db.json'));
+} catch(e){
+  debug(e);
 }
 
 var pagesEnroute = {};
