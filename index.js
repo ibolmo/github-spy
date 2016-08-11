@@ -33,7 +33,7 @@ var USERS = [
   'stevealvaradorgv'
 ];
 
-if (false && !process.env.OPENSHIFT_NODEJS_IP) {
+if (!process.env.OPENSHIFT_NODEJS_IP) {
   USERS = ['ibolmo'];
 }
 
@@ -46,10 +46,12 @@ if (fs.existsSync('./db.json')){
   }
 }
 
-var handling = {};
+var pagesEnroute = {};
+var keensEnroute = {};
+var uid = 0;
 
 USERS.forEach(function(user){
-  handling[user] = true;
+  pagesEnroute[user] = true;
 
   var handleEvents = function(err, res){
 
@@ -70,8 +72,19 @@ USERS.forEach(function(user){
           actor: e.actor.login,
           repo: e.repo.name
         };
+
         debug(user + ' (' + e.type + ') ' + JSON.stringify(payload, null, '  '));
-        keen.recordEvent(e.type, payload);
+
+        var i = uid++;
+        keensEnroute[i] = true;
+
+        keen.recordEvent(e.type, payload, function(){
+          delete keensEnroute[i];
+          if (!Object.keys(pool).length){
+            debug('all events tracked');
+            process.exit();
+          }
+        });
       }
     });
 
@@ -81,11 +94,10 @@ USERS.forEach(function(user){
     } else {
       debug('Done. Last event: ' + db[user]);
       fs.writeFileSync('./db.json', JSON.stringify(db, null, '  '));
-      delete handling[user];
+      delete pagesEnroute[user];
 
-      if (!Object.keys(handling).length){
-        debug('all work completed');
-        process.exit();
+      if (!Object.keys(pagesEnroute).length){
+        debug('all pages requested');
       }
     }
   };
