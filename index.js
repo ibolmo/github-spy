@@ -80,7 +80,7 @@ USERS.forEach(function(user){
 
         keen.recordEvent(e.type, payload, function(){
           delete keensEnroute[i];
-          if (!Object.keys(pool).length){
+          if (!Object.keys(keensEnroute).length){
             debug('all events tracked');
             process.exit();
           }
