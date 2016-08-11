@@ -27,6 +27,7 @@ var USERS = [
   'jllanas',
   'javmarr',
   'joelgarza',
+  'joelgarzatx',
   'pamsny',
   'riccochapa',
   'samcio',
