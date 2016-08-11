@@ -2,3 +2,4 @@
 db.json
 node_modules
 .env.prod
+.DS_Store
