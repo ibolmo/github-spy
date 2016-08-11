@@ -11,9 +11,7 @@
   "dependencies": {
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
-    "mongoose": "^4.5.8",
-    "node-github": "0.0.3",
-    "oboe": "^2.1.2",
-    "q": "^1.4.1"
+    "github": "^2.4.1",
+    "keen-tracking": "^1.0.3"
   }
 }
