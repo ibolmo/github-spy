@@ -37,9 +37,11 @@ if (!process.env.OPENSHIFT_NODEJS_IP) {
   USERS = ['ibolmo'];
 }
 
+var DB_FILE = (process.env.OPENSHIFT_DATA_DIR || '.') + '/db.json';
+
 var db = {};
 try {
-  db = JSON.parse(fs.readFileSync((process.env.OPENSHIFT_DATA_DIR || '.') + '/db.json'));
+  db = JSON.parse(fs.readFileSync(DB_FILE));
 } catch(e){
   debug(e);
 }
@@ -91,7 +93,7 @@ USERS.forEach(function(user){
       github.getNextPage(res, handleEvents);
     } else {
       debug('Done. Last event: ' + db[user]);
-      fs.writeFileSync('./db.json', JSON.stringify(db, null, '  '));
+      fs.writeFileSync(DB_FILE, JSON.stringify(db, null, '  '));
       delete pagesEnroute[user];
 
       if (!Object.keys(pagesEnroute).length){
