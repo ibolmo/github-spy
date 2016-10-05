@@ -1,15 +1,15 @@
 {
   "name": "boot-github-spy",
   "version": "1.0.0",
-  "description": "",
+  "description": "An openshift-ready Github user analytics collector.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "spy": "node index.js"
   },
   "author": {
     "name": "Olmo Maldonado",
-    "email": "olmo.maldonado@gmail.com",
-    "url": "http://www.codergv.org/"
+    "email": "me@ibolmo.com",
+    "url": "http://ibolmo.com/"
   },
   "license": "ISC",
   "dependencies": {
@@ -23,6 +23,5 @@
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-  "private": true,
   "main": "server.js"
 }

@@ -1,9 +1,11 @@
+require('dotenv').config();
+
 var GithubAPI = require('github');
 var debug = require('debug')('app');
 var fs = require('fs');
 var KeenTracking = require('keen-tracking');
 
-require('dotenv').config();
+var USERS = require('./users');
 
 var keen = new KeenTracking({
   projectId: process.env.KEEN_ID,
@@ -15,28 +17,10 @@ var github = new GithubAPI({
 });
 
 github.authenticate({
-    type: "oauth",
+    type: 'oauth',
     key: process.env.GITHUB_ID,
     secret: process.env.GITHUB_SECRET
 });
-
-var USERS = [
-  'avilano',
-  'atamalatzi',
-  'erecinos',
-  'jllanas',
-  'javmarr',
-  'joelgarza',
-  'joelgarzatx',
-  'pamsny',
-  'riccochapa',
-  'samcio',
-  'stevealvaradorgv'
-];
-
-if (!process.env.OPENSHIFT_NODEJS_IP) {
-  USERS = ['ibolmo'];
-}
 
 var DB_FILE = (process.env.OPENSHIFT_DATA_DIR || '.') + '/db.json';
 
@@ -69,7 +53,7 @@ USERS.forEach(function(user){
         db[user] = e.id;
         var payload = {
           user: user,
-          keen: { timestamp: e.create_at },
+          keen: { timestamp: new Date(e.created_at).toISOString() },
           actor: e.actor.login,
           repo: e.repo.name
         };
