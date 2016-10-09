@@ -10,7 +10,7 @@ Review the [blog post](https://medium.com/p/10931799b7f0) about the Github Spy.
 - [Installation](#installation)
 - [Usage](#usage)
 - [API](#api)
-- [Contribute](#contribute)
+
 - [License](#license)
 
 ## Background
